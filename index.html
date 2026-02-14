@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Not Noddy Live | UPI Super Chat</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="script.js"></script>
+</head>
+<body>
+
+<header>
+  <h1 class="rgb-title">🔥 Not Noddy Live</h1>
+  <p class="tagline">UPI Super Chat Support Through UPI</p>
+</header>
+
+<div class="card">
+  <h2>💬 Super Chat Now</h2>
+
+  <div class="amount-panel">
+    <button onclick="selectAmount(10,this)">₹10 – Supporter</button>
+    <button onclick="selectAmount(50,this)">₹50 – Super</button>
+    <button onclick="selectAmount(100,this)">₹100 – Booster</button>
+    <button onclick="selectAmount(500,this)">₹500 – Legend</button>
+  </div>
+
+  <div class="input-group">
+    <input id="customAmount" type="number" placeholder="Enter Super Chat Amount ₹">
+  </div>
+
+  <div class="input-group">
+    <input id="name" placeholder="Your Name (optional)">
+  </div>
+
+  <div class="input-group">
+    <textarea id="message" placeholder="Your Super Chat Message..."></textarea>
+  </div>
+
+  <button class="main-btn" onclick="donate()">🚀 Super Chat Now</button>
+</div>
+
+<div class="goal-card">
+  <h3>🎯 Monthly Super Chat Goal</h3>
+  <div class="progress-container">
+    <div id="progressBar" class="progress-bar"></div>
+  </div>
+  <p id="goalText">Raised ₹0 / ₹10000</p>
+</div>
+
+<div class="leaderboard-card">
+  <h3>👑 Top Super Chat Supporters</h3>
+  <ul id="leaderboard"></ul>
+</div>
+
+<div class="history-card">
+  <h3>💎 Recent Super Chats</h3>
+  <ul id="history"></ul>
+</div>
+
+<div id="qrModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeQR()">×</span>
+    <h3>Scan & Super Chat</h3>
+    <img id="qrImage">
+    <p id="qrAmount"></p>
+  </div>
+</div>
+
+<footer>© 2026 Not Noddy Live | UPI Super Chat</footer>
+
+</body>
+</html>

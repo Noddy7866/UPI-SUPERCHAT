@@ -47,6 +47,34 @@ margin-bottom:20px;
 box-shadow:0 0 40px rgba(0,255,255,0.2);
 }
 
+/* Emoji Feedback Section */
+.emoji-feedback{
+text-align:center;
+padding:20px;
+margin-bottom:20px;
+background:rgba(0,0,0,0.3);
+border-radius:15px;
+border:2px solid rgba(0,255,231,0.3);
+}
+
+.emoji{
+font-size:60px;
+display:block;
+animation:bounce 0.5s ease;
+}
+
+@keyframes bounce{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.2)}
+}
+
+.emoji-text{
+margin:10px 0 0 0;
+font-size:16px;
+color:#00ffe7;
+font-weight:600;
+}
+
 .amount-panel{
 display:grid;
 grid-template-columns:1fr 1fr;

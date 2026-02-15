@@ -1,6 +1,12 @@
-const UPI_ID="noddyk782@okicici";
-const MONTHLY_GOAL=10000;
+const DEFAULT_UPI="noddyk782@okicici";
+const DEFAULT_GOAL=10000;
+const ADMIN_PASS="admin123";
 let selectedAmount=0;
+
+function getSettings(){
+const s=JSON.parse(localStorage.getItem("adminSettings")||"{}");
+return {upi:s.upi||DEFAULT_UPI,goal:Number(s.goal)||DEFAULT_GOAL};
+}
 
 function selectAmount(a){
 selectedAmount=a;
@@ -25,7 +31,7 @@ localStorage.setItem("superchat",JSON.stringify(history.slice(0,50)));
 renderAll();
 
 if(isMobile()){
-window.location.href=`upi://pay?pa=${UPI_ID}&pn=NotNoddyLive&am=${amount}&tn=${encodeURIComponent(name+" : "+message)}`;
+window.location.href=`upi://pay?pa=${getSettings().upi}&pn=NotNoddyLive&am=${amount}&tn=${encodeURIComponent(name+" : "+message)}`;
 }else{
 generateQR(amount,name,message);
 document.getElementById("qrModal").style.display="flex";
@@ -33,7 +39,7 @@ document.getElementById("qrModal").style.display="flex";
 }
 
 function generateQR(amount,name,message){
-const data=`upi://pay?pa=${UPI_ID}&pn=NotNoddyLive&am=${amount}&tn=${encodeURIComponent(name+" : "+message)}`;
+const data=`upi://pay?pa=${getSettings().upi}&pn=NotNoddyLive&am=${amount}&tn=${encodeURIComponent(name+" : "+message)}`;
 document.getElementById("qrImage").src=`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(data)}`;
 document.getElementById("qrAmount").innerText=`Super Chat Amount: ₹${amount}`;
 }
@@ -56,11 +62,12 @@ ul.appendChild(li);
 }
 
 function renderGoal(h){
+const goal=getSettings().goal;
 let total=0;
 h.forEach(d=>total+=d.amount);
-const percent=Math.min((total/MONTHLY_GOAL)*100,100);
+const percent=Math.min((total/goal)*100,100);
 document.getElementById("progressBar").style.width=percent+"%";
-document.getElementById("goalText").innerText=`Raised ₹${total} / ₹${MONTHLY_GOAL}`;
+document.getElementById("goalText").innerText=`Raised ₹${total} / ₹${goal}`;
 }
 
 function renderLeaderboard(h){
@@ -81,5 +88,66 @@ ul.appendChild(li);
 function closeQR(){
 document.getElementById("qrModal").style.display="none";
 }
+
+function showAdminLogin(){
+document.getElementById("adminLoginModal").style.display="flex";
+}
+
+function closeAdminLogin(){
+document.getElementById("adminLoginModal").style.display="none";
+}
+
+function adminLogin(){
+const p=document.getElementById("adminPassword").value;
+if(p===ADMIN_PASS){
+closeAdminLogin();
+showAdminPanel();
+}else{
+alert("Incorrect Password");
+}
+}
+
+function showAdminPanel(){
+document.getElementById("adminPanelModal").style.display="flex";
+document.getElementById("newGoal").value=getSettings().goal;
+document.getElementById("newUPI").value=getSettings().upi;
+}
+
+function closeAdminPanel(){
+document.getElementById("adminPanelModal").style.display="none";
+}
+
+function updateGoal(){
+const g=document.getElementById("newGoal").value;
+if(g){
+const s=JSON.parse(localStorage.getItem("adminSettings")||"{}");
+s.goal=g;
+localStorage.setItem("adminSettings",JSON.stringify(s));
+alert("Goal Updated");
+renderAll();
+}
+}
+
+function updateSettings(){
+const u=document.getElementById("newUPI").value;
+if(u){
+const s=JSON.parse(localStorage.getItem("adminSettings")||"{}");
+s.upi=u;
+localStorage.setItem("adminSettings",JSON.stringify(s));
+alert("Settings Updated");
+}
+}
+
+function clearHistory(){
+if(confirm("Are you sure you want to delete all history?")){
+localStorage.removeItem("superchat");
+renderAll();
+alert("History Cleared");
+}
+}
+
+document.addEventListener("keydown",e=>{
+if(e.key.toLowerCase()==="a") showAdminLogin();
+});
 
 document.addEventListener("DOMContentLoaded",renderAll);

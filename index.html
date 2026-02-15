@@ -68,5 +68,50 @@
 
 <footer>© 2026 Not Noddy Live | UPI Super Chat</footer>
 
+<!-- Admin Panel Toggle -->
+<button id="adminToggle" class="admin-toggle" onclick="showAdminLogin()">⚙️</button>
+
+<!-- Admin Login Modal -->
+<div id="adminLoginModal" class="modal">
+  <div class="modal-content admin-modal">
+    <span class="close" onclick="closeAdminLogin()">×</span>
+    <h3>🔐 Admin Login</h3>
+    <div class="input-group">
+      <input id="adminPassword" type="password" placeholder="Enter Admin Password">
+    </div>
+    <button class="main-btn" onclick="adminLogin()">Login</button>
+  </div>
+</div>
+
+<!-- Admin Panel Modal -->
+<div id="adminPanelModal" class="modal">
+  <div class="modal-content admin-modal">
+    <span class="close" onclick="closeAdminPanel()">×</span>
+    <h3>🛠️ Admin Panel</h3>
+    
+    <div class="admin-section">
+      <h4>📊 Manage Goals</h4>
+      <div class="input-group">
+        <input id="newGoal" type="number" placeholder="Enter Monthly Goal (₹)">
+      </div>
+      <button class="admin-btn" onclick="updateGoal()">Update Goal</button>
+    </div>
+    
+    <div class="admin-section">
+      <h4>⚙️ Settings</h4>
+      <div class="input-group">
+        <input id="newUPI" type="text" placeholder="Enter UPI ID">
+      </div>
+      <button class="admin-btn" onclick="updateSettings()">Update Settings</button>
+    </div>
+    
+    <div class="admin-section">
+      <h4>🗑️ Clear History</h4>
+      <p>This will remove all super chat history.</p>
+      <button class="admin-btn danger" onclick="clearHistory()">Clear All History</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

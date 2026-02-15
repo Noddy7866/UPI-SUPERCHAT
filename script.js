@@ -1,6 +1,6 @@
 const DEFAULT_UPI="noddyk782@okicici";
 const DEFAULT_GOAL=10000;
-const ADMIN_PASS="admin123";
+const ADMIN_PASS="notnoddylive@1989";
 let selectedAmount=0;
 
 function getSettings(){

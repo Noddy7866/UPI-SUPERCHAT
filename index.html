@@ -2,122 +2,294 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Not Noddy Live | UPI Super Chat</title>
-<link rel="stylesheet" href="style.css">
-<script defer src="script.js"></script>
-</head>
-<body>
+<title>NotNoddy Superchat</title>
 
-<header>
-  <h1 class="rgb-title">🔥 Not Noddy Live</h1>
-  <p class="tagline">UPI Super Chat Support Through UPI</p>
-</header>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: radial-gradient(circle at top, #0b0b0b, #000);
+  color: #e5e7eb;
+  display: flex;
+  justify-content: center;
+}
+
+/* Container */
+.container {
+  width: 420px;
+  padding: 30px 16px;
+}
+
+/* Card */
+.card {
+  background: #111;
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255, 0, 0, 0.15);
+  box-shadow:
+    0 0 15px rgba(255, 0, 0, 0.12),
+    inset 0 0 10px rgba(255, 0, 0, 0.05);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 25px rgba(255, 0, 0, 0.25),
+    inset 0 0 15px rgba(255, 0, 0, 0.08);
+}
+
+/* Titles */
+h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ff2a2a;
+  text-shadow: 0 0 8px rgba(255,0,0,0.6);
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* Amount Buttons */
+.btn {
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  border-color: red;
+  box-shadow: 0 0 10px rgba(255,0,0,0.4);
+}
+
+.active {
+  border: 1px solid red;
+  background: #1a1a1a;
+  box-shadow: 0 0 12px rgba(255,0,0,0.5);
+}
+
+/* Inputs */
+input, textarea {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #2a2a2a;
+  background: #0a0a0a;
+  color: white;
+  transition: 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: red;
+  box-shadow: 0 0 10px rgba(255,0,0,0.4);
+  outline: none;
+}
+
+/* Pay Button */
+.pay-btn {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #ff0000, #b30000);
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,0,0,0.4);
+  transition: 0.25s;
+}
+
+.pay-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 20px rgba(255,0,0,0.7);
+}
+
+/* QR */
+.qr {
+  display: none;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* Chat items */
+.item {
+  background: #181818;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 8px;
+  border-left: 3px solid red;
+  transition: 0.2s;
+}
+
+.item:hover {
+  background: #202020;
+}
+
+.big {
+  border-left: 3px solid gold;
+  box-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
 
 <div class="card">
-  <h2>💬 Super Chat Now</h2>
+<h2>🕷️ Superchat</h2>
 
-  <!-- Custom Emoji Feedback Section -->
-  <div class="emoji-feedback" id="emojiFeedback">
-    <span class="emoji" id="feedbackEmoji">😀</span>
-    <p class="emoji-text" id="emojiText">Select an amount!</p>
-  </div>
-
-  <div class="amount-panel">
-    <button onclick="selectAmount(10,this)">₹10 – Supporter</button>
-    <button onclick="selectAmount(50,this)">₹50 – Super</button>
-    <button onclick="selectAmount(100,this)">₹100 – Booster</button>
-    <button onclick="selectAmount(500,this)">₹500 – Legend</button>
-  </div>
-
-  <div class="input-group">
-    <input id="customAmount" type="number" placeholder="Enter Super Chat Amount ₹">
-  </div>
-
-  <div class="input-group">
-    <input id="name" placeholder="Your Name (optional)">
-  </div>
-
-  <div class="input-group">
-    <textarea id="message" placeholder="Your Super Chat Message..."></textarea>
-  </div>
-
-  <button class="main-btn" onclick="donate()">🚀 Super Chat Now</button>
+<div>
+  <div class="btn" onclick="setAmount(10,this)">₹10</div>
+  <div class="btn" onclick="setAmount(50,this)">₹50</div>
+  <div class="btn" onclick="setAmount(100,this)">₹100</div>
+  <div class="btn" onclick="setAmount(500,this)">₹500</div>
 </div>
 
-<div class="goal-card">
-  <h3>🎯 Monthly Super Chat Goal</h3>
-  <div class="progress-container">
-    <div id="progressBar" class="progress-bar"></div>
-  </div>
-  <p id="goalText">Raised ₹0 / ₹10000</p>
+<input id="amount" placeholder="Amount">
+<input id="name" placeholder="Name">
+<textarea id="msg" placeholder="Message"></textarea>
+
+<div class="pay-btn" onclick="pay()">Pay</div>
+
+<div class="qr" id="qrBox">
+<img id="qrImg" width="200">
+</div>
 </div>
 
-<div class="leaderboard-card">
-  <h3>👑 Top Super Chat Supporters</h3>
-  <ul id="leaderboard"></ul>
+<div class="card">
+<h3>👑 Top Supporters</h3>
+<div id="top"></div>
 </div>
 
-<div class="history-card">
-  <h3>💎 Recent Super Chats</h3>
-  <ul id="history"></ul>
+<div class="card">
+<h3>💬 Recent Chats</h3>
+<div id="chat"></div>
 </div>
 
-<div id="qrModal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeQR()">×</span>
-    <h3>Scan & Super Chat</h3>
-    <img id="qrImage">
-    <p id="qrAmount"></p>
-  </div>
 </div>
 
-<footer>© 2026 Not Noddy Live | UPI Super Chat</footer>
+<script>
+// 🔴 SAFE FIREBASE (NO CRASH)
+let db = null;
 
-<!-- Admin Panel Toggle -->
-<button id="adminToggle" class="admin-toggle" onclick="showAdminLogin()">⚙️</button>
+try {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBWpJcON64LVvtcIo6rz0S4O5gDedwKm9A",
+    authDomain: "notnoddy-superchat.firebaseapp.com",
+    databaseURL: "https://notnoddy-superchat-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "notnoddy-superchat"
+  };
 
-<!-- Admin Login Modal -->
-<div id="adminLoginModal" class="modal">
-  <div class="modal-content admin-modal">
-    <span class="close" onclick="closeAdminLogin()">×</span>
-    <h3>🔐 Admin Login</h3>
-    <div class="input-group">
-      <input id="adminPassword" type="password" placeholder="Enter Admin Password">
-    </div>
-    <button class="main-btn" onclick="adminLogin()">Login</button>
-  </div>
-</div>
+  if (firebaseConfig.apiKey !== "YOUR_API") {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+  }
+} catch (e) {
+  console.log("Firebase not active");
+}
 
-<!-- Admin Panel Modal -->
-<div id="adminPanelModal" class="modal">
-  <div class="modal-content admin-modal">
-    <span class="close" onclick="closeAdminPanel()">×</span>
-    <h3>🛠️ Admin Panel</h3>
-    
-    <div class="admin-section">
-      <h4>📊 Manage Goals</h4>
-      <div class="input-group">
-        <input id="newGoal" type="number" placeholder="Enter Monthly Goal (₹)">
-      </div>
-      <button class="admin-btn" onclick="updateGoal()">Update Goal</button>
-    </div>
-    
-    <div class="admin-section">
-      <h4>⚙️ Settings</h4>
-      <div class="input-group">
-        <input id="newUPI" type="text" placeholder="Enter UPI ID">
-      </div>
-      <button class="admin-btn" onclick="updateSettings()">Update Settings</button>
-    </div>
-    
-    <div class="admin-section">
-      <h4>🗑️ Clear History</h4>
-      <p>This will remove all super chat history.</p>
-      <button class="admin-btn danger" onclick="clearHistory()">Clear All History</button>
-    </div>
-  </div>
-</div>
+let selected = 0;
+let users = {};
+
+// SELECT
+function setAmount(val, el) {
+  selected = val;
+  document.querySelectorAll(".btn").forEach(b => b.classList.remove("active"));
+  el.classList.add("active");
+  document.getElementById("amount").value = val;
+}
+
+// PAY
+function pay() {
+  let input = document.getElementById("amount").value;
+  let amount = input ? Number(input) : selected;
+
+  if (!amount) return alert("Enter amount");
+
+  let name = document.getElementById("name").value || "Anonymous";
+  let msg = document.getElementById("msg").value || "Superchat";
+
+  let upi = `upi://pay?pa=noddyk782@okicici&pn=NotNoddyLive&am=${amount}&cu=INR&tn=${encodeURIComponent(msg)}`;
+
+  // SAVE ONLY IF FIREBASE EXISTS
+  if (db) {
+    db.ref("superchat").push({name,msg,amount});
+  } else {
+    addLocal(name,msg,amount);
+  }
+
+  // UPI
+  if (/Android|iPhone/i.test(navigator.userAgent)) {
+    window.location.href = upi;
+  } else {
+    let qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upi)}`;
+    qrImg.src = qr;
+    qrBox.style.display="block";
+  }
+}
+
+// LOCAL MODE (NO FIREBASE)
+function addLocal(name,msg,amount) {
+  let div=document.createElement("div");
+  div.className="item";
+  div.innerHTML=`<b>${name}</b> ₹${amount}<br>${msg}`;
+  chat.prepend(div);
+
+  users[name]=(users[name]||0)+amount;
+  updateTop();
+}
+
+// FIREBASE LIVE
+if (db) {
+  db.ref("superchat").on("child_added", snap=>{
+    let d = snap.val();
+    addLocal(d.name,d.msg,d.amount);
+  });
+}
+
+// UPDATE TOP
+function updateTop() {
+  let sorted = Object.entries(users).sort((a,b)=>b[1]-a[1]);
+  let html="";
+  sorted.slice(0,5).forEach(u=>{
+    html += `<div class="item">${u[0]} - ₹${u[1]}</div>`;
+  });
+  top.innerHTML = html;
+}
+</script>
 
 </body>
 </html>

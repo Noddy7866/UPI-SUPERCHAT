@@ -35,6 +35,23 @@ s.style.transform=isActive?"scale(1.4)":"scale(1)";
 s.style.filter=isActive?"grayscale(0%)":"grayscale(100%)";
 });
 }
+const Razorpay = require("razorpay");
+
+const instance = new Razorpay({
+  key_id: "YOUR_KEY_ID",
+  key_secret: "YOUR_KEY_SECRET",
+});
+
+app.post("/create-order", async (req, res) => {
+  const options = {
+    amount: req.body.amount * 100, // ₹ to paise
+    currency: "INR",
+    receipt: "order_rcptid_" + Date.now()
+  };
+
+  const order = await instance.orders.create(options);
+  res.json(order);
+});
 
 function selectAmount(a){
 selectedAmount=a;
@@ -236,6 +253,23 @@ const s=document.createElement("style");
 s.innerHTML="body{background:transparent!important;} body > *:not(#obsPopup){display:none!important;}";
 document.head.appendChild(s);
 }
+});
+const Razorpay = require("razorpay");
+
+const instance = new Razorpay({
+  key_id: "YOUR_KEY_ID",
+  key_secret: "YOUR_KEY_SECRET",
+});
+
+app.post("/create-order", async (req, res) => {
+  const options = {
+    amount: req.body.amount * 100, // ₹ to paise
+    currency: "INR",
+    receipt: "order_rcptid_" + Date.now()
+  };
+
+  const order = await instance.orders.create(options);
+  res.json(order);
 });
 
 

@@ -238,21 +238,5 @@ el.addEventListener("animationend",()=>el.remove());
 },6000);
 }
 
-document.addEventListener("keydown",e=>{
-if(e.key.toLowerCase()==="a") showAdminLogin();
-});
-
-document.addEventListener("DOMContentLoaded",()=>{
-renderAll();
-setupOBSListener();
-const c=document.getElementById("customAmount");
-if(c)c.addEventListener("input",e=>updateEmojiReaction(e.target.value));
-
-if(new URLSearchParams(window.location.search).has("obs")){
-const s=document.createElement("style");
-s.innerHTML="body{background:transparent!important;} body > *:not(#obsPopup){display:none!important;}";
-document.head.appendChild(s);
-}
-;
 
 

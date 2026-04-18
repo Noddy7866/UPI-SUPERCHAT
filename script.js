@@ -222,21 +222,7 @@ s.innerHTML=`@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@
 .obs-message{font-size:16px;color:#ddd;margin-top:8px;font-style:italic;border-top:1px solid rgba(255,255,255,0.1);padding-top:8px}`;
 document.head.appendChild(s);
 }
-const existing=document.getElementById("obsPopup");
-if(existing)existing.remove();
-const p=document.createElement("div");
-p.id="obsPopup";
-p.className="obs-popup-container";
-document.body.appendChild(p);
-p.innerHTML=`<div class="obs-bell">🔔</div><div class="obs-title">New Donation</div><div class="obs-amount">₹${d.amount}</div><div class="obs-name">${d.name}</div>${d.message?`<div class="obs-message">"${d.message}"</div>`:""}`;
-setTimeout(()=>{
-const el=document.getElementById("obsPopup");
-if(el){
-el.classList.add("obs-popup-exit");
-el.addEventListener("animationend",()=>el.remove());
-}
-},6000);
-}
+;
 
 
 

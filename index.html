@@ -1,295 +1,438 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>NotNoddy Superchat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotNoddyLive | Spidey Superchat</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    
+    <style>
+        :root {
+            --spidey-red: #E23636;
+            --spidey-blue: #003049;
+            --spidey-dark: #0a0a0a;
+            --venom-gold: #FFD700;
+        }
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+        /* Spider-Web Background */
+        body {
+            background-color: var(--spidey-dark);
+            background-image: 
+                radial-gradient(circle at center, rgba(226, 54, 54, 0.15) 0%, transparent 60%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
 
-<style>
-* {
-  box-sizing: border-box;
-}
+        /* SOCIAL NAVIGATION BAR */
+        .social-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+            max-width: 420px;
+            margin-bottom: 20px;
+            padding: 12px;
+            background: rgba(20, 20, 20, 0.95);
+            border: 2px solid var(--spidey-red);
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(226, 54, 54, 0.3);
+            box-sizing: border-box;
+        }
 
-body {
-  margin: 0;
-  font-family: 'Inter', system-ui, sans-serif;
-  background: radial-gradient(circle at top, #0b0b0b, #000);
-  color: #e5e7eb;
-  display: flex;
-  justify-content: center;
-}
+        .nav-link {
+            flex: 1;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            padding: 10px;
+            border-radius: 8px;
+            background: #111;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
 
-/* Container */
-.container {
-  width: 420px;
-  padding: 30px 16px;
-}
+        .nav-link i { font-size: 1.2rem; }
+        .nav-link.yt:hover { background: #FF0000; border-color: #FF0000; transform: translateY(-3px); }
+        .nav-link.dc:hover { background: #5865F2; border-color: #5865F2; transform: translateY(-3px); }
+        .nav-link.ig:hover { background: #E1306C; border-color: #E1306C; transform: translateY(-3px); }
 
-/* Card */
-.card {
-  background: #111;
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 18px;
-  border: 1px solid rgba(255, 0, 0, 0.15);
-  box-shadow:
-    0 0 15px rgba(255, 0, 0, 0.12),
-    inset 0 0 10px rgba(255, 0, 0, 0.05);
-  transition: 0.3s;
-}
+        /* MAIN CARD */
+        .spidey-container {
+            background: rgba(20, 20, 20, 0.95);
+            border: 3px solid var(--spidey-red);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 420px;
+            padding: 25px;
+            box-shadow: 0 0 25px rgba(226, 54, 54, 0.4);
+            box-sizing: border-box;
+            position: relative;
+        }
 
-.card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 25px rgba(255, 0, 0, 0.25),
-    inset 0 0 15px rgba(255, 0, 0, 0.08);
-}
+        h1 {
+            text-align: center;
+            color: var(--spidey-red);
+            text-transform: uppercase;
+            margin-top: 0;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0px #000;
+        }
 
-/* Titles */
-h2 {
-  margin: 0 0 6px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #ff2a2a;
-  text-shadow: 0 0 8px rgba(255,0,0,0.6);
-}
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: bold;
+            color: #999;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
 
-.subtitle {
-  font-size: 13px;
-  color: #9ca3af;
-  margin-bottom: 16px;
-}
+        .input-box {
+            background: #111;
+            border: 1px solid #333;
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        .input-box:focus { border-color: var(--spidey-red); outline: none; }
 
-/* Grid */
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 12px;
-}
+        .chip-row { display: flex; gap: 10px; margin-bottom: 15px; }
 
-/* Amount Buttons */
-.btn {
-  padding: 12px;
-  border-radius: 10px;
-  text-align: center;
-  background: #181818;
-  border: 1px solid #2a2a2a;
-  cursor: pointer;
-  transition: 0.25s;
-}
+        .chip {
+            flex: 1;
+            padding: 12px 0;
+            background: var(--spidey-blue);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .chip:hover, .chip.active { background: var(--spidey-red); border-color: white; transform: scale(1.05); }
 
-.btn:hover {
-  border-color: red;
-  box-shadow: 0 0 10px rgba(255,0,0,0.4);
-}
+        .btn-thwip {
+            background: var(--spidey-red);
+            color: white;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 #9b1d1d;
+        }
+        .btn-thwip:active { transform: translateY(4px); box-shadow: none; }
 
-.active {
-  border: 1px solid red;
-  background: #1a1a1a;
-  box-shadow: 0 0 12px rgba(255,0,0,0.5);
-}
+        /* QR Box */
+        #qr-wrapper {
+            display: none; 
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            border: 3px double var(--spidey-blue);
+            text-align: center;
+        }
 
-/* Inputs */
-input, textarea {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #2a2a2a;
-  background: #0a0a0a;
-  color: white;
-  transition: 0.2s;
-}
+        #qrcode { display: flex; justify-content: center; margin-bottom: 15px; }
 
-input:focus, textarea:focus {
-  border-color: red;
-  box-shadow: 0 0 10px rgba(255,0,0,0.4);
-  outline: none;
-}
+        .payment-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+        }
+        .payment-logos img { height: 22px; object-fit: contain; }
 
-/* Pay Button */
-.pay-btn {
-  margin-top: 14px;
-  padding: 14px;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #ff0000, #b30000);
-  text-align: center;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(255,0,0,0.4);
-  transition: 0.25s;
-}
+        /* History Panels */
+        .history-section { width: 100%; max-width: 420px; margin-top: 30px; }
+        .history-section h3 { margin-bottom: 10px; font-size: 1.1rem; }
+        
+        .history-card {
+            background: #151515;
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--spidey-red);
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .top-donors { border-left-color: var(--venom-gold); background: rgba(255, 215, 0, 0.05); }
 
-.pay-btn:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 20px rgba(255,0,0,0.7);
-}
+        /* Admin Controls */
+        #admin-trigger { margin-top: 40px; cursor: pointer; font-size: 1.5rem; opacity: 0.3; transition: opacity 0.3s; }
+        #admin-trigger:hover { opacity: 1; }
 
-/* QR */
-.qr {
-  display: none;
-  text-align: center;
-  margin-top: 16px;
-}
+        #login-box {
+            display: none;
+            background: #1a1a1a;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 12px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 420px;
+            box-sizing: border-box;
+            text-align: center;
+        }
 
-/* Chat items */
-.item {
-  background: #181818;
-  padding: 12px;
-  border-radius: 10px;
-  margin-top: 8px;
-  border-left: 3px solid red;
-  transition: 0.2s;
-}
-
-.item:hover {
-  background: #202020;
-}
-
-.big {
-  border-left: 3px solid gold;
-  box-shadow: 0 0 10px rgba(255,215,0,0.5);
-}
-
-/* Footer */
-.footer {
-  text-align: center;
-  font-size: 12px;
-  color: #6b7280;
-  margin-top: 10px;
-}
-</style>
+        #admin-panel {
+            display: none; 
+            background: #1a1a1a;
+            padding: 20px;
+            border: 2px dashed var(--venom-gold);
+            border-radius: 12px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 420px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
-
 <body>
-<div class="container">
 
-<div class="card">
-<h2>🕷️ Superchat</h2>
+<nav class="social-nav">
+    <a href="https://www.youtube.com/channel/UCzA-CCh8F9h7VWPOQpx4LMA" target="_blank" class="nav-link yt"><i class="fa-brands fa-youtube"></i> YouTube</a>
+    <a href="https://discord.gg/7taRbEfxyj" target="_blank" class="nav-link dc"><i class="fa-brands fa-discord"></i> Discord</a>
+    <a href="https://www.instagram.com/p/DXLrZvSE9MJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="nav-link ig"><i class="fa-brands fa-instagram"></i> Instagram</a>
+</nav>
 
-<div>
-  <div class="btn" onclick="setAmount(10,this)">₹10</div>
-  <div class="btn" onclick="setAmount(50,this)">₹50</div>
-  <div class="btn" onclick="setAmount(100,this)">₹100</div>
-  <div class="btn" onclick="setAmount(500,this)">₹500</div>
+<div class="spidey-container">
+    <h1>🕸️ NotNoddyLive 🕸️</h1>
+    
+    <label>Your Hero Name</label>
+    <input type="text" id="donorName" class="input-box" placeholder="e.g. Peter Parker">
+
+    <label>Message for Noddy</label>
+    <textarea id="donorMsg" class="input-box" rows="2" placeholder="With great power..."></textarea>
+
+    <label>Select Amount (₹)</label>
+    <div class="chip-row">
+        <div class="chip" onclick="setAmount(50, this)">₹50</div>
+        <div class="chip" onclick="setAmount(100, this)">₹100</div>
+        <div class="chip" onclick="setAmount(500, this)">₹500</div>
+    </div>
+    <input type="number" id="customAmt" class="input-box" placeholder="Or enter custom amount..." oninput="clearChips()">
+
+    <button class="btn-thwip" onclick="generatePayment()">Send Superchat</button>
+
+    <div id="qr-wrapper">
+        <div id="qrcode"></div>
+        <div class="payment-logos">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f2/Google_Pay_Logo.svg" alt="GPay">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" alt="PhonePe">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg" alt="Paytm">
+            
+        </div>
+        <p style="color: #444; font-size: 12px; margin: 10px 0 0 0; font-weight: bold;">SCAN WITH ANY UPI APP</p>
+    </div>
 </div>
 
-<input id="amount" placeholder="Amount">
-<input id="name" placeholder="Name">
-<textarea id="msg" placeholder="Message"></textarea>
-
-<div class="pay-btn" onclick="pay()">Pay</div>
-
-<div class="qr" id="qrBox">
-<img id="qrImg" width="200">
-</div>
+<div class="history-section">
+    <h3 style="color: var(--venom-gold);">🏆 TOP SUPPORTERS</h3>
+    <div id="top-chats">Loading...</div>
+    
+    <h3 style="color: var(--spidey-red);">💬 RECENT CHATS</h3>
+    <div id="recent-chats">Loading...</div>
 </div>
 
-<div class="card">
-<h3>👑 Top Supporters</h3>
-<div id="top"></div>
+<div id="admin-trigger" onclick="showLoginBox()" title="Admin Login">🔒</div>
+
+<div id="login-box">
+    <h4 style="margin-top: 0; color: #aaa;">Enter Web-Shooter Password</h4>
+    <input type="password" id="adminPassInput" class="input-box" placeholder="Password...">
+    <button class="btn-thwip" style="background: var(--spidey-blue); padding: 10px;" onclick="verifyAdmin()">Login</button>
 </div>
 
-<div class="card">
-<h3>💬 Recent Chats</h3>
-<div id="chat"></div>
-</div>
-
+<div id="admin-panel">
+    <h3 style="color: var(--venom-gold); margin-top: 0;">Admin Override</h3>
+    <input type="text" id="adminName" class="input-box" placeholder="Sender Name">
+    <input type="number" id="adminAmt" class="input-box" placeholder="Amount Received (₹)">
+    <button class="btn-thwip" style="background: #27ae60; box-shadow: 0 4px 0 #1e8449;" onclick="pushToFirebase()">Approve & Post to Cloud</button>
 </div>
 
 <script>
-// 🔴 SAFE FIREBASE (NO CRASH)
-let db = null;
+    // ==========================================================
+    // 🛑 PASTE YOUR FIREBASE CONFIGURATION HERE 🛑
+    // ==========================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWpJcON64LVvtcIo6rz0S4O5gDedwKm9A",
+      authDomain: "notnoddy-superchat.firebaseapp.com",
+      projectId: "notnoddy-superchat",
+      storageBucket: "notnoddy-superchat.firebasestorage.app",
+      messagingSenderId: "214431592335",
+      appId: "1:214431592335:web:d22f7814c598bf3a0365fa"
+    };
+    
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+    // ==========================================================
 
-try {
-  const firebaseConfig = {
-    apiKey: "AIzaSyBWpJcON64LVvtcIo6rz0S4O5gDedwKm9A",
-    authDomain: "notnoddy-superchat.firebaseapp.com",
-    databaseURL: "https://notnoddy-superchat-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "notnoddy-superchat"
-  };
+    // --- CONFIGURATION ---
+    const UPI_ID = "noddyk782@okicici";
+    const ADMIN_PASS = "noddyk@782";
 
-  if (firebaseConfig.apiKey !== "YOUR_API") {
-    firebase.initializeApp(firebaseConfig);
-    db = firebase.database();
-  }
-} catch (e) {
-  console.log("Firebase not active");
-}
+    // --- UI LOGIC ---
+    function setAmount(val, element) {
+        document.getElementById('customAmt').value = val;
+        clearChips();
+        element.classList.add('active');
+    }
 
-let selected = 0;
-let users = {};
+    function clearChips() {
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    }
 
-// SELECT
-function setAmount(val, el) {
-  selected = val;
-  document.querySelectorAll(".btn").forEach(b => b.classList.remove("active"));
-  el.classList.add("active");
-  document.getElementById("amount").value = val;
-}
+    function generatePayment() {
+        const amt = document.getElementById('customAmt').value;
+        const name = document.getElementById('donorName').value || "Anonymous Hero";
+        const msg = document.getElementById('donorMsg').value || "Superchat";
+        
+        if(!amt || amt <= 0) { alert("Please enter a valid amount to send!"); return; }
 
-// PAY
-function pay() {
-  let input = document.getElementById("amount").value;
-  let amount = input ? Number(input) : selected;
+        const upiLink = `upi://pay?pa=${UPI_ID}&pn=NotNoddyLive&tn=${encodeURIComponent(msg)}&am=${amt}&cu=INR`;
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-  if (!amount) return alert("Enter amount");
+        if(isMobile) {
+            window.location.href = upiLink;
+        } else {
+            const qrWrapper = document.getElementById('qr-wrapper');
+            const qrCodeDiv = document.getElementById('qrcode');
+            qrWrapper.style.display = 'block';
+            qrCodeDiv.innerHTML = ""; 
+            new QRCode(qrCodeDiv, { text: upiLink, width: 180, height: 180 });
+            window.scrollTo({ top: qrWrapper.offsetTop, behavior: 'smooth' });
+        }
+    }
 
-  let name = document.getElementById("name").value || "Anonymous";
-  let msg = document.getElementById("msg").value || "Superchat";
+    // --- ADMIN LOGIC ---
+    function showLoginBox() {
+        document.getElementById('admin-trigger').style.display = 'none';
+        document.getElementById('login-box').style.display = 'block';
+    }
 
-  let upi = `upi://pay?pa=noddyk782@okicici&pn=NotNoddyLive&am=${amount}&cu=INR&tn=${encodeURIComponent(msg)}`;
+    function verifyAdmin() {
+        const inputPass = document.getElementById('adminPassInput').value;
+        if(inputPass === ADMIN_PASS) {
+            document.getElementById('login-box').style.display = 'none';
+            document.getElementById('admin-panel').style.display = 'block';
+        } else {
+            alert("Incorrect Password!");
+            document.getElementById('adminPassInput').value = ""; 
+        }
+    }
 
-  // SAVE ONLY IF FIREBASE EXISTS
-  if (db) {
-    db.ref("superchat").push({name,msg,amount});
-  } else {
-    addLocal(name,msg,amount);
-  }
+    // --- FIREBASE CLOUD LOGIC ---
+    function pushToFirebase() {
+        const name = document.getElementById('adminName').value;
+        const amt = parseInt(document.getElementById('adminAmt').value);
+        
+        if(!name || !amt) {
+            alert("Admin: Please fill both Name and Amount");
+            return;
+        }
 
-  // UPI
-  if (/Android|iPhone/i.test(navigator.userAgent)) {
-    window.location.href = upi;
-  } else {
-    let qr = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(upi)}`;
-    qrImg.src = qr;
-    qrBox.style.display="block";
-  }
-}
+        // Push data to Firestore
+        db.collection("superchats").add({
+            name: name,
+            amount: amt,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            // Clear fields on success
+            document.getElementById('adminName').value = "";
+            document.getElementById('adminAmt').value = "";
+        }).catch((error) => {
+            console.error("Error adding document: ", error);
+            alert("Error connecting to database. Check API keys!");
+        });
+    }
 
-// LOCAL MODE (NO FIREBASE)
-function addLocal(name,msg,amount) {
-  let div=document.createElement("div");
-  div.className="item";
-  div.innerHTML=`<b>${name}</b> ₹${amount}<br>${msg}`;
-  chat.prepend(div);
+    // --- REAL-TIME CLOUD LISTENER ---
+    // This constantly listens to the database and updates the UI for everyone instantly
+    db.collection("superchats")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((querySnapshot) => {
+        
+        let chatHistory = [];
+        querySnapshot.forEach((doc) => {
+            chatHistory.push(doc.data());
+        });
 
-  users[name]=(users[name]||0)+amount;
-  updateTop();
-}
+        const recentContainer = document.getElementById('recent-chats');
+        const topContainer = document.getElementById('top-chats');
+        
+        if(chatHistory.length === 0) {
+            recentContainer.innerHTML = "<p style='color:#666; font-size:14px;'>No chats yet. Be the first!</p>";
+            topContainer.innerHTML = "<p style='color:#666; font-size:14px;'>No top supporters yet.</p>";
+            return;
+        }
 
-// FIREBASE LIVE
-if (db) {
-  db.ref("superchat").on("child_added", snap=>{
-    let d = snap.val();
-    addLocal(d.name,d.msg,d.amount);
-  });
-}
+        // Render Recent (Last 5)
+        recentContainer.innerHTML = chatHistory.slice(0, 5).map(chat => `
+            <div class="history-card">
+                <span><b>${chat.name}</b></span>
+                <span style="color: var(--spidey-red); font-weight: bold;">₹${chat.amount}</span>
+            </div>
+        `).join('');
 
-// UPDATE TOP
-function updateTop() {
-  let sorted = Object.entries(users).sort((a,b)=>b[1]-a[1]);
-  let html="";
-  sorted.slice(0,5).forEach(u=>{
-    html += `<div class="item">${u[0]} - ₹${u[1]}</div>`;
-  });
-  top.innerHTML = html;
-}
+        // Render Top (Highest 3 Amounts)
+        const sortedHistory = [...chatHistory].sort((a, b) => b.amount - a.amount);
+        const uniqueTop = [];
+        const seenNames = new Set();
+        
+        for(let chat of sortedHistory) {
+            if(!seenNames.has(chat.name)) {
+                seenNames.add(chat.name);
+                uniqueTop.push(chat);
+            }
+        }
+
+        topContainer.innerHTML = uniqueTop.slice(0, 3).map(chat => `
+            <div class="history-card top-donors">
+                <span>👑 <b>${chat.name}</b></span>
+                <span style="color: var(--venom-gold); font-weight: bold;">₹${chat.amount}</span>
+            </div>
+        `).join('');
+    }, (error) => {
+        console.log("Error getting real-time updates. Make sure Firestore is set up and rules allow read access.", error);
+    });
+
 </script>
-
 </body>
 </html>

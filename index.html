@@ -17,16 +17,17 @@
             --spidey-blue: #003049;
             --spidey-dark: #0a0a0a;
             --venom-gold: #FFD700;
+            --neon-blue: #00d2ff;
         }
 
-        /* Spider-Web Background */
         body {
             background-color: var(--spidey-dark);
-            background-image: 
-                radial-gradient(circle at center, rgba(226, 54, 54, 0.15) 0%, transparent 60%),
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
+            /* HIGH QUALITY CINEMATIC BACKGROUND */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)), 
+                              url('https://images.unsplash.com/photo-1635805737707-575885ab0820?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
@@ -39,213 +40,129 @@
 
         /* SOCIAL NAVIGATION BAR */
         .social-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            width: 100%;
-            max-width: 420px;
-            margin-bottom: 20px;
-            padding: 12px;
-            background: rgba(20, 20, 20, 0.95);
-            border: 2px solid var(--spidey-red);
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(226, 54, 54, 0.3);
+            display: flex; justify-content: space-between; gap: 10px; width: 100%; max-width: 420px;
+            margin-bottom: 20px; padding: 12px; 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 54, 54, 0.5); 
+            border-radius: 12px; 
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
             box-sizing: border-box;
         }
-
         .nav-link {
-            flex: 1;
-            text-align: center;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.9rem;
-            padding: 10px;
-            border-radius: 8px;
-            background: #111;
-            border: 1px solid #333;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            flex: 1; text-align: center; color: white; text-decoration: none; font-weight: bold; font-size: 0.9rem;
+            padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
         .nav-link i { font-size: 1.2rem; }
-        .nav-link.yt:hover { background: #FF0000; border-color: #FF0000; transform: translateY(-3px); }
-        .nav-link.dc:hover { background: #5865F2; border-color: #5865F2; transform: translateY(-3px); }
-        .nav-link.ig:hover { background: #E1306C; border-color: #E1306C; transform: translateY(-3px); }
+        .nav-link.yt:hover { background: #FF0000; transform: translateY(-3px); }
+        .nav-link.dc:hover { background: #5865F2; transform: translateY(-3px); }
+        .nav-link.ig:hover { background: #E1306C; transform: translateY(-3px); }
 
-        /* MAIN CARD */
+        /* MAIN CARD - GLASS MORPHISM */
         .spidey-container {
-            background: rgba(20, 20, 20, 0.95);
-            border: 3px solid var(--spidey-red);
+            background: rgba(15, 15, 15, 0.8); 
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--spidey-red); 
             border-radius: 15px;
-            width: 100%;
-            max-width: 420px;
-            padding: 25px;
-            box-shadow: 0 0 25px rgba(226, 54, 54, 0.4);
-            box-sizing: border-box;
-            position: relative;
+            width: 100%; max-width: 420px; padding: 25px; 
+            box-shadow: 0 0 40px rgba(226, 54, 54, 0.3);
+            box-sizing: border-box; position: relative;
         }
 
-        h1 {
-            text-align: center;
-            color: var(--spidey-red);
-            text-transform: uppercase;
-            margin-top: 0;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 0px #000;
-        }
-
-        label {
-            display: block;
-            font-size: 12px;
-            font-weight: bold;
-            color: #999;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
+        h1 { text-align: center; color: var(--spidey-red); text-transform: uppercase; margin-top: 0; text-shadow: 2px 2px 10px #000; }
+        label { display: block; font-size: 11px; font-weight: bold; color: #bbb; margin-bottom: 5px; text-transform: uppercase; }
 
         .input-box {
-            background: #111;
-            border: 1px solid #333;
-            color: white;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            font-family: inherit;
+            background: rgba(0, 0, 0, 0.6); border: 1px solid #444; color: white; padding: 12px; width: 100%;
+            border-radius: 8px; margin-bottom: 15px; box-sizing: border-box; font-family: inherit;
         }
-        .input-box:focus { border-color: var(--spidey-red); outline: none; }
+        .input-box:focus { border-color: var(--spidey-red); outline: none; box-shadow: 0 0 10px rgba(226, 54, 54, 0.2); }
 
         .chip-row { display: flex; gap: 10px; margin-bottom: 15px; }
-
         .chip {
-            flex: 1;
-            padding: 12px 0;
-            background: var(--spidey-blue);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: bold;
-            border: 2px solid transparent;
-            transition: 0.2s;
+            flex: 1; padding: 12px 0; background: rgba(0, 48, 73, 0.6); border-radius: 8px; text-align: center;
+            cursor: pointer; font-weight: bold; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s;
         }
-        .chip:hover, .chip.active { background: var(--spidey-red); border-color: white; transform: scale(1.05); }
+        .chip:hover, .chip.active { background: var(--spidey-red); transform: scale(1.05); }
 
         .btn-thwip {
-            background: var(--spidey-red);
-            color: white;
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 900;
-            font-size: 1.2rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 4px 0 #9b1d1d;
+            background: var(--spidey-red); color: white; width: 100%; padding: 16px; border: none;
+            border-radius: 8px; font-weight: 900; font-size: 1.1rem; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(226, 54, 54, 0.4);
         }
-        .btn-thwip:active { transform: translateY(4px); box-shadow: none; }
+        .btn-thwip:active { transform: translateY(2px); box-shadow: none; }
 
         /* QR Box */
         #qr-wrapper {
-            display: none; 
-            background: white;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 12px;
-            border: 3px double var(--spidey-blue);
-            text-align: center;
+            display: none; background: white; padding: 20px; margin-top: 20px; border-radius: 12px;
+            border: 3px double var(--spidey-blue); text-align: center;
         }
-
         #qrcode { display: flex; justify-content: center; margin-bottom: 15px; }
-
-        .payment-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            border-top: 2px solid #eee;
-            padding-top: 15px;
-        }
+        .payment-logos { display: flex; justify-content: center; gap: 15px; border-top: 2px solid #eee; padding-top: 15px; }
         .payment-logos img { height: 22px; object-fit: contain; }
 
-        /* History Panels */
-        .history-section { width: 100%; max-width: 420px; margin-top: 30px; }
-        .history-section h3 { margin-bottom: 10px; font-size: 1.1rem; }
-        
-        .history-card {
-            background: #151515;
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            border-left: 4px solid var(--spidey-red);
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-            animation: fadeIn 0.5s ease-in-out;
+        /* GOAL TRACKER */
+        .goal-box {
+            width: 100%; max-width: 420px; background: rgba(15, 15, 15, 0.85); padding: 18px 20px;
+            backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid var(--neon-blue); margin-top: 25px;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.15); box-sizing: border-box;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: bold; }
+        .goal-title-text { color: #fff; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .goal-amount-text { color: var(--venom-gold); font-size: 1rem; }
+        .progress-bar-bg { width: 100%; background: rgba(0,0,0,0.5); border-radius: 10px; height: 18px; border: 1px solid #333; overflow: hidden; position: relative; }
+        .progress-fill {
+            height: 100%; background: linear-gradient(90deg, var(--spidey-blue), var(--neon-blue));
+            width: 0%; transition: width 0.8s ease-in-out;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* History Panels */
+        .history-section { width: 100%; max-width: 420px; margin-top: 25px; }
+        .history-section h3 { margin-bottom: 10px; font-size: 1rem; color: #fff; letter-spacing: 1px; }
+        .history-card {
+            background: rgba(20, 20, 20, 0.7); backdrop-filter: blur(5px); padding: 12px 15px; margin-bottom: 8px; border-left: 4px solid var(--spidey-red);
+            border-radius: 6px; display: flex; justify-content: space-between; align-items: center;
+        }
         .top-donors { border-left-color: var(--venom-gold); background: rgba(255, 215, 0, 0.05); }
 
         /* Admin Controls */
-        #admin-trigger { margin-top: 40px; cursor: pointer; font-size: 1.5rem; opacity: 0.3; transition: opacity 0.3s; }
-        #admin-trigger:hover { opacity: 1; }
-
-        #login-box {
-            display: none;
-            background: #1a1a1a;
-            padding: 20px;
-            border: 1px solid #444;
-            border-radius: 12px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 420px;
-            box-sizing: border-box;
-            text-align: center;
+        #admin-trigger { margin-top: 40px; cursor: pointer; font-size: 1.5rem; opacity: 0.2; }
+        #admin-trigger:hover { opacity: 0.8; }
+        #login-box, #admin-panel {
+            display: none; background: rgba(10, 10, 10, 0.95); padding: 25px; border: 1px solid #444; border-radius: 12px;
+            margin-top: 20px; width: 100%; max-width: 420px; box-sizing: border-box; text-align: center;
         }
-
-        #admin-panel {
-            display: none; 
-            background: #1a1a1a;
-            padding: 20px;
-            border: 2px dashed var(--venom-gold);
-            border-radius: 12px;
-            margin-top: 20px;
-            width: 100%;
-            max-width: 420px;
-            box-sizing: border-box;
-        }
+        .db-list { max-height: 150px; overflow-y: auto; background: #000; padding: 10px; border-radius: 8px; margin-bottom: 15px; }
+        .db-item { display: flex; justify-content: space-between; align-items: center; padding: 8px; margin-bottom: 5px; border-bottom: 1px solid #222; font-size: 13px; }
+        .del-btn { background: var(--spidey-red); border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .del-btn:hover { background: #ff0000; }
     </style>
 </head>
 <body>
 
 <nav class="social-nav">
-    <a href="https://www.youtube.com/channel/UCzA-CCh8F9h7VWPOQpx4LMA" target="_blank" class="nav-link yt"><i class="fa-brands fa-youtube"></i> YouTube</a>
-    <a href="https://discord.gg/7taRbEfxyj" target="_blank" class="nav-link dc"><i class="fa-brands fa-discord"></i> Discord</a>
-    <a href="https://www.instagram.com/p/DXLrZvSE9MJ/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="nav-link ig"><i class="fa-brands fa-instagram"></i> Instagram</a>
+    <a href="#" target="_blank" class="nav-link yt"><i class="fa-brands fa-youtube"></i> YouTube</a>
+    <a href="#" target="_blank" class="nav-link dc"><i class="fa-brands fa-discord"></i> Discord</a>
+    <a href="#" target="_blank" class="nav-link ig"><i class="fa-brands fa-instagram"></i> Insta</a>
 </nav>
 
 <div class="spidey-container">
-    <h1>🕸️ NotNoddyLive 🕸️</h1>
+    <h1>🕸️ NotNoddyLive</h1>
     
-    <label>Your Hero Name</label>
-    <input type="text" id="donorName" class="input-box" placeholder="e.g. Peter Parker">
+    <label>YOUR NAME</label>
+    <input type="text" id="donorName" class="input-box" placeholder="Your Gamer Tag">
 
-    <label>Message for Noddy</label>
-    <textarea id="donorMsg" class="input-box" rows="2" placeholder="With great power..."></textarea>
+    <label>SUPERCHAT MESSAGE FOR NODDY</label>
+    <textarea id="donorMsg" class="input-box" rows="2" placeholder="Send a message to Noddy..."></textarea>
 
-    <label>Select Amount (₹)</label>
+    <label>AMOUNT (₹)</label>
     <div class="chip-row">
         <div class="chip" onclick="setAmount(50, this)">₹50</div>
         <div class="chip" onclick="setAmount(100, this)">₹100</div>
         <div class="chip" onclick="setAmount(500, this)">₹500</div>
     </div>
-    <input type="number" id="customAmt" class="input-box" placeholder="Or enter custom amount..." oninput="clearChips()">
+    <input type="number" id="customAmt" class="input-box" placeholder="Custom amount" oninput="clearChips()">
 
     <button class="btn-thwip" onclick="generatePayment()">Send Superchat</button>
 
@@ -261,15 +178,24 @@
     </div>
 </div>
 
+<div class="goal-box">
+    <div class="goal-header">
+        <span class="goal-title-text" id="display-goal-title">Stream Goal</span>
+        <span class="goal-amount-text" id="display-goal-text">₹0 / ₹0</span>
+    </div>
+    <div class="progress-bar-bg">
+        <div class="progress-fill" id="goal-fill-bar"></div>
+    </div>
+</div>
+
 <div class="history-section">
-    <h3 style="color: var(--venom-gold);">🏆 TOP SUPPORTERS</h3>
+    <h3 style="color: var(--venom-gold);">🏆 TOP LEGENDS</h3>
     <div id="top-chats">Loading...</div>
-    
-    <h3 style="color: var(--spidey-red);">💬 RECENT CHATS</h3>
+    <h3>💬 RECENT ACTIVITIES</h3>
     <div id="recent-chats">Loading...</div>
 </div>
 
-<div id="admin-trigger" onclick="showLoginBox()" title="Admin Login">🔒</div>
+<div id="admin-trigger" onclick="showLoginBox()">🔒</div>
 
 <div id="login-box">
     <h4 style="margin-top: 0; color: #aaa;">Enter Web-Shooter Password</h4>
@@ -278,17 +204,29 @@
 </div>
 
 <div id="admin-panel">
-    <h3 style="color: var(--venom-gold); margin-top: 0;">Admin Override</h3>
+    <h3 style="color: var(--venom-gold); margin-top: 0; text-align: center;">Admin Command Center</h3>
+    
+    <label>1. Add New Superchat</label>
     <input type="text" id="adminName" class="input-box" placeholder="Sender Name">
     <input type="number" id="adminAmt" class="input-box" placeholder="Amount Received (₹)">
-    <button class="btn-thwip" style="background: #27ae60; box-shadow: 0 4px 0 #1e8449;" onclick="pushToFirebase()">Approve & Post to Cloud</button>
+    <button class="btn-thwip" style="background: #27ae60; box-shadow: 0 4px 0 #1e8449; margin-bottom: 20px;" onclick="pushToFirebase()">Approve & Post to Cloud</button>
+
+    <label style="color: var(--neon-blue); border-top: 1px dashed #444; padding-top: 15px;">2. Stream Goal Settings</label>
+    <input type="text" id="adminGoalTitle" class="input-box" placeholder="Goal Name (e.g. PC Upgrade)">
+    <input type="number" id="adminGoalTarget" class="input-box" placeholder="Target Amount (₹)">
+    <button class="btn-thwip" style="background: var(--spidey-blue); box-shadow: 0 4px 0 #001f30; margin-bottom: 20px;" onclick="updateGoalSettings()">Update Live Goal</button>
+
+    <label style="color: var(--spidey-red); border-top: 1px dashed #444; padding-top: 15px;">3. Database Manager (Click X to Delete)</label>
+    <div class="db-list" id="admin-db-list">
+        <p style="color: #666; font-size: 12px; text-align: center;">Loading database...</p>
+    </div>
 </div>
 
 <script>
     // ==========================================================
     // 🛑 PASTE YOUR FIREBASE CONFIGURATION HERE 🛑
     // ==========================================================
-    const firebaseConfig = {
+     const firebaseConfig = {
       apiKey: "AIzaSyBWpJcON64LVvtcIo6rz0S4O5gDedwKm9A",
       authDomain: "notnoddy-superchat.firebaseapp.com",
       projectId: "notnoddy-superchat",
@@ -297,34 +235,30 @@
       appId: "1:214431592335:web:d22f7814c598bf3a0365fa"
     };
     
-    // Initialize Firebase
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
+    if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
     const db = firebase.firestore();
     // ==========================================================
 
-    // --- CONFIGURATION ---
     const UPI_ID = "noddyk782@okicici";
     const ADMIN_PASS = "noddyk@782";
 
-    // --- UI LOGIC ---
+    // Global variables for Goal Calculation
+    let currentTotalRaised = 0;
+    let goalTarget = 10000; // Default
+
+    // --- UI Logic ---
     function setAmount(val, element) {
         document.getElementById('customAmt').value = val;
         clearChips();
         element.classList.add('active');
     }
-
-    function clearChips() {
-        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-    }
+    function clearChips() { document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); }
 
     function generatePayment() {
         const amt = document.getElementById('customAmt').value;
         const name = document.getElementById('donorName').value || "Anonymous Hero";
         const msg = document.getElementById('donorMsg').value || "Superchat";
-        
-        if(!amt || amt <= 0) { alert("Please enter a valid amount to send!"); return; }
+        if(!amt || amt <= 0) { alert("Please enter a valid amount!"); return; }
 
         const upiLink = `upi://pay?pa=${UPI_ID}&pn=NotNoddyLive&tn=${encodeURIComponent(msg)}&am=${amt}&cu=INR`;
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -341,15 +275,13 @@
         }
     }
 
-    // --- ADMIN LOGIC ---
+    // --- Admin Auth ---
     function showLoginBox() {
         document.getElementById('admin-trigger').style.display = 'none';
         document.getElementById('login-box').style.display = 'block';
     }
-
     function verifyAdmin() {
-        const inputPass = document.getElementById('adminPassInput').value;
-        if(inputPass === ADMIN_PASS) {
+        if(document.getElementById('adminPassInput').value === ADMIN_PASS) {
             document.getElementById('login-box').style.display = 'none';
             document.getElementById('admin-panel').style.display = 'block';
         } else {
@@ -358,52 +290,82 @@
         }
     }
 
-    // --- FIREBASE CLOUD LOGIC ---
+    // --- Firebase Logic ---
     function pushToFirebase() {
         const name = document.getElementById('adminName').value;
         const amt = parseInt(document.getElementById('adminAmt').value);
-        
-        if(!name || !amt) {
-            alert("Admin: Please fill both Name and Amount");
-            return;
-        }
+        if(!name || !amt) { alert("Fill both Name and Amount"); return; }
 
-        // Push data to Firestore
         db.collection("superchats").add({
-            name: name,
-            amount: amt,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            name: name, amount: amt, timestamp: firebase.firestore.FieldValue.serverTimestamp()
         }).then(() => {
-            // Clear fields on success
             document.getElementById('adminName').value = "";
             document.getElementById('adminAmt').value = "";
-        }).catch((error) => {
-            console.error("Error adding document: ", error);
-            alert("Error connecting to database. Check API keys!");
         });
     }
 
-    // --- REAL-TIME CLOUD LISTENER ---
-    // This constantly listens to the database and updates the UI for everyone instantly
-    db.collection("superchats")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((querySnapshot) => {
+    function deleteSpecificChat(docId) {
+        if(confirm("Delete this chat? This will remove the money from the goal progress too!")) {
+            db.collection("superchats").doc(docId).delete();
+        }
+    }
+
+    // --- Goal Logic ---
+    function renderGoal() {
+        document.getElementById('display-goal-text').innerText = `₹${currentTotalRaised} / ₹${goalTarget}`;
+        let percent = (currentTotalRaised / goalTarget) * 100;
+        if(percent > 100) percent = 100; 
+        document.getElementById('goal-fill-bar').style.width = percent + "%";
+    }
+
+    function updateGoalSettings() {
+        const title = document.getElementById('adminGoalTitle').value || "Current Goal";
+        const target = parseInt(document.getElementById('adminGoalTarget').value) || 10000;
         
+        db.collection("config").doc("stream_goal").set({
+            title: title, target: target
+        }).then(() => alert("Stream Goal Updated Live!"));
+    }
+
+    // Listen to Goal Config Changes
+    db.collection("config").doc("stream_goal").onSnapshot((doc) => {
+        if(doc.exists) {
+            const data = doc.data();
+            goalTarget = data.target || 10000;
+            document.getElementById('display-goal-title').innerText = data.title || "Stream Goal";
+            document.getElementById('adminGoalTitle').value = data.title || "";
+            document.getElementById('adminGoalTarget').value = data.target || "";
+        } else {
+            document.getElementById('display-goal-title').innerText = "Stream Goal";
+        }
+        renderGoal();
+    });
+
+    // --- REAL-TIME LISTENER ---
+    db.collection("superchats").orderBy("timestamp", "desc").onSnapshot((querySnapshot) => {
         let chatHistory = [];
+        let totalSum = 0; 
+
         querySnapshot.forEach((doc) => {
-            chatHistory.push(doc.data());
+            const data = doc.data();
+            chatHistory.push({ id: doc.id, ...data });
+            totalSum += data.amount; 
         });
+
+        currentTotalRaised = totalSum;
+        renderGoal();
 
         const recentContainer = document.getElementById('recent-chats');
         const topContainer = document.getElementById('top-chats');
+        const adminDbList = document.getElementById('admin-db-list');
         
         if(chatHistory.length === 0) {
             recentContainer.innerHTML = "<p style='color:#666; font-size:14px;'>No chats yet. Be the first!</p>";
             topContainer.innerHTML = "<p style='color:#666; font-size:14px;'>No top supporters yet.</p>";
+            adminDbList.innerHTML = "<p style='color:#666; font-size:12px; text-align:center;'>Database is empty.</p>";
             return;
         }
 
-        // Render Recent (Last 5)
         recentContainer.innerHTML = chatHistory.slice(0, 5).map(chat => `
             <div class="history-card">
                 <span><b>${chat.name}</b></span>
@@ -411,28 +373,26 @@
             </div>
         `).join('');
 
-        // Render Top (Highest 3 Amounts)
         const sortedHistory = [...chatHistory].sort((a, b) => b.amount - a.amount);
         const uniqueTop = [];
         const seenNames = new Set();
-        
         for(let chat of sortedHistory) {
-            if(!seenNames.has(chat.name)) {
-                seenNames.add(chat.name);
-                uniqueTop.push(chat);
-            }
+            if(!seenNames.has(chat.name)) { seenNames.add(chat.name); uniqueTop.push(chat); }
         }
-
         topContainer.innerHTML = uniqueTop.slice(0, 3).map(chat => `
             <div class="history-card top-donors">
                 <span>👑 <b>${chat.name}</b></span>
                 <span style="color: var(--venom-gold); font-weight: bold;">₹${chat.amount}</span>
             </div>
         `).join('');
-    }, (error) => {
-        console.log("Error getting real-time updates. Make sure Firestore is set up and rules allow read access.", error);
-    });
 
+        adminDbList.innerHTML = chatHistory.map(chat => `
+            <div class="db-item">
+                <span><b>${chat.name}</b> - ₹${chat.amount}</span>
+                <button class="del-btn" onclick="deleteSpecificChat('${chat.id}')">X</button>
+            </div>
+        `).join('');
+    });
 </script>
 </body>
 </html>
